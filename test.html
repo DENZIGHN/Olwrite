@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест по русскому языку | Olwrite.com — Зубицкая Ольга Александровна</title>
+    <meta name="description" content="Проверьте свои знания русского языка! 20 вопросов от простых до сложных. Узнайте свой уровень грамотности.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-text">Olwrite</span>
+                <span class="logo-dot">.com</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="articles.html">Статьи</a></li>
+                <li><a href="test.html" class="active">Тест</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+            <button class="burger" id="burger" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <span class="section-tag">АБВГ Тестирование</span>
+            <h1 class="page-title">Тест по русскому языку</h1>
+            <p class="page-description">20 вопросов от простых к сложным. Проверьте свои знания орфографии, грамматики и пунктуации.</p>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz section">
+        <div class="container">
+            <!-- Quiz Start Screen -->
+            <div class="quiz-start" id="quizStart">
+                <div class="quiz-start-card">
+                    <div class="quiz-start-letters">
+                        <span>А</span><span>Б</span><span>В</span><span>Г</span>
+                    </div>
+                    <h2>Готовы проверить свои знания?</h2>
+                    <p>Тест состоит из 20 вопросов, разделённых на три уровня сложности: простые, средние и сложные. На каждый вопрос — один правильный ответ.</p>
+                    <div class="quiz-start-info">
+                        <div class="quiz-info-item">
+                            <span class="quiz-info-number">10</span>
+                            <span class="quiz-info-label">Простых</span>
+                        </div>
+                        <div class="quiz-info-item">
+                            <span class="quiz-info-number">5</span>
+                            <span class="quiz-info-label">Средних</span>
+                        </div>
+                        <div class="quiz-info-item">
+                            <span class="quiz-info-number">5</span>
+                            <span class="quiz-info-label">Сложных</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg" id="quizStartBtn">Начать тест</button>
+                </div>
+            </div>
+
+            <!-- Quiz Questions -->
+            <div class="quiz-body" id="quizBody" style="display: none;">
+                <!-- Progress Bar -->
+                <div class="quiz-progress">
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="quiz-progress-info">
+                        <span>Вопрос <strong id="currentQ">1</strong> из <strong>20</strong></span>
+                        <span class="quiz-level-badge" id="levelBadge">Простой</span>
+                    </div>
+                </div>
+
+                <!-- Question Card -->
+                <div class="quiz-question-card" id="questionCard">
+                    <h3 class="quiz-question-text" id="questionText"></h3>
+                    <div class="quiz-options" id="quizOptions"></div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="quiz-nav">
+                    <button class="btn btn-outline" id="prevBtn" style="visibility: hidden;">Назад</button>
+                    <button class="btn btn-primary" id="nextBtn" disabled>Далее</button>
+                </div>
+            </div>
+
+            <!-- Quiz Results -->
+            <div class="quiz-results" id="quizResults" style="display: none;">
+                <div class="quiz-results-card">
+                    <!-- Circular Progress -->
+                    <div class="result-circle-wrap">
+                        <div class="result-circle" id="resultCircle">
+                            <svg viewBox="0 0 200 200">
+                                <circle cx="100" cy="100" r="88" fill="none" stroke="#e8e0d6" stroke-width="8"/>
+                                <circle cx="100" cy="100" r="88" fill="none" stroke="url(#resultGrad)" stroke-width="8" stroke-linecap="round"
+                                    stroke-dasharray="553" stroke-dashoffset="553" id="progressCircle"
+                                    transform="rotate(-90 100 100)"/>
+                                <defs>
+                                    <linearGradient id="resultGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#d4a574"/>
+                                        <stop offset="100%" stop-color="#722f37"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="result-circle-text">
+                                <span class="result-score" id="resultScore">0</span>
+                                <span class="result-total">из 20</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="result-title" id="resultTitle"></h2>
+                    <p class="result-subtitle" id="resultSubtitle"></p>
+
+                    <div class="result-actions">
+                        <button class="btn btn-primary" id="retryBtn">Пройти ещё раз</button>
+                        <a href="contacts.html" class="btn btn-outline">Записаться на занятие</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <span class="logo-text">Olwrite</span>
+                        <span class="logo-dot">.com</span>
+                    </a>
+                    <p>Зубицкая Ольга Александровна<br>Педагог-репетитор по русскому языку</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="articles.html">Статьи</a></li>
+                        <li><a href="test.html">Тест</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Материалы</h4>
+                    <ul>
+                        <li><a href="articles.html?category=vpr">Подготовка к ВПР</a></li>
+                        <li><a href="articles.html?category=methods">Методические разработки</a></li>
+                        <li><a href="articles.html?category=other">Разное</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Olwrite.com | Зубицкая Ольга Александровна. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/quiz.js"></script>
+</body>
+</html>
