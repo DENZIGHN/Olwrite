@@ -30,6 +30,248 @@ if (burger && navLinks) {
     });
 }
 
+// ===== Cursor-Reactive Particles =====
+const particlesContainer = document.getElementById('particles');
+
+if (particlesContainer) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';
+    particlesContainer.appendChild(canvas);
+
+    let mouseX = -1000;
+    let mouseY = -1000;
+    let particles = [];
+    const PARTICLE_COUNT = 60;
+    const MOUSE_RADIUS = 180;
+
+    function resizeCanvas() {
+        const rect = particlesContainer.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Track mouse relative to hero section
+    const heroSection = particlesContainer.closest('.hero') || particlesContainer.parentElement;
+    document.addEventListener('mousemove', (e) => {
+        const rect = heroSection.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+    });
+
+    document.addEventListener('mouseleave', () => {
+        mouseX = -1000;
+        mouseY = -1000;
+    });
+
+    // Particle colors from our literary palette
+    const colors = [
+        { r: 212, g: 165, b: 116 }, // gold
+        { r: 114, g: 47, b: 55 },   // burgundy
+        { r: 74, g: 124, b: 89 },   // green
+        { r: 230, g: 201, b: 168 }, // light gold
+        { r: 154, g: 74, b: 84 },   // light burgundy
+    ];
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.baseX = this.x;
+            this.baseY = this.y;
+            this.size = Math.random() * 3 + 1;
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+            this.alpha = Math.random() * 0.4 + 0.1;
+            this.baseAlpha = this.alpha;
+            this.vx = (Math.random() - 0.5) * 0.3;
+            this.vy = (Math.random() - 0.5) * 0.3;
+            this.driftSpeed = Math.random() * 0.005 + 0.002;
+            this.driftOffset = Math.random() * Math.PI * 2;
+            this.pulseSpeed = Math.random() * 0.02 + 0.01;
+            this.pulseOffset = Math.random() * Math.PI * 2;
+        }
+
+        update(time) {
+            // Gentle drifting motion
+            this.x += this.vx + Math.sin(time * this.driftSpeed + this.driftOffset) * 0.2;
+            this.y += this.vy + Math.cos(time * this.driftSpeed + this.driftOffset * 0.7) * 0.15;
+
+            // Pulsing alpha
+            this.alpha = this.baseAlpha + Math.sin(time * this.pulseSpeed + this.pulseOffset) * 0.1;
+
+            // Mouse interaction — particles are attracted/repelled
+            const dx = mouseX - this.x;
+            const dy = mouseY - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < MOUSE_RADIUS) {
+                const force = (1 - dist / MOUSE_RADIUS) * 0.8;
+                // Gentle attraction + swirl
+                const angle = Math.atan2(dy, dx);
+                this.x += Math.cos(angle + 1.2) * force * 1.5;
+                this.y += Math.sin(angle + 1.2) * force * 1.5;
+                // Brighten near cursor
+                this.alpha = Math.min(0.8, this.alpha + force * 0.5);
+                // Grow near cursor
+                this.renderSize = this.size + force * 3;
+            } else {
+                this.renderSize = this.size;
+            }
+
+            // Wrap around edges
+            if (this.x < -20) this.x = canvas.width + 20;
+            if (this.x > canvas.width + 20) this.x = -20;
+            if (this.y < -20) this.y = canvas.height + 20;
+            if (this.y > canvas.height + 20) this.y = -20;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.renderSize || this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha})`;
+            ctx.fill();
+        }
+    }
+
+    // Initialize particles
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push(new Particle());
+    }
+
+    // Draw connecting lines between nearby particles
+    function drawConnections() {
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < 120) {
+                    const opacity = (1 - dist / 120) * 0.08;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(212, 165, 116, ${opacity})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    // Mouse connection lines
+    function drawMouseConnections() {
+        particles.forEach(p => {
+            const dx = mouseX - p.x;
+            const dy = mouseY - p.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < MOUSE_RADIUS) {
+                const opacity = (1 - dist / MOUSE_RADIUS) * 0.2;
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(mouseX, mouseY);
+                ctx.strokeStyle = `rgba(212, 165, 116, ${opacity})`;
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+            }
+        });
+    }
+
+    function animate(time) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(p => {
+            p.update(time);
+            p.draw();
+        });
+
+        drawConnections();
+        drawMouseConnections();
+
+        requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+}
+
+// ===== Cursor Glow Effect =====
+const cursorGlow = document.createElement('div');
+cursorGlow.className = 'cursor-glow';
+document.body.appendChild(cursorGlow);
+
+let glowX = 0, glowY = 0;
+let currentGlowX = 0, currentGlowY = 0;
+
+document.addEventListener('mousemove', (e) => {
+    glowX = e.clientX;
+    glowY = e.clientY;
+});
+
+function updateGlow() {
+    currentGlowX += (glowX - currentGlowX) * 0.08;
+    currentGlowY += (glowY - currentGlowY) * 0.08;
+    cursorGlow.style.left = currentGlowX + 'px';
+    cursorGlow.style.top = currentGlowY + 'px';
+    requestAnimationFrame(updateGlow);
+}
+
+updateGlow();
+
+// ===== Text Split & Character Animation =====
+function splitTextToChars(element) {
+    const text = element.textContent;
+    element.textContent = '';
+    element.classList.add('text-animate');
+
+    let charIndex = 0;
+    const words = text.split(' ');
+
+    words.forEach((word, wordIdx) => {
+        const wordSpan = document.createElement('span');
+        wordSpan.classList.add('word');
+
+        for (let i = 0; i < word.length; i++) {
+            const charSpan = document.createElement('span');
+            charSpan.classList.add('char');
+            charSpan.textContent = word[i];
+            charSpan.style.animationDelay = (charIndex * 0.03) + 's';
+            wordSpan.appendChild(charSpan);
+            charIndex++;
+        }
+
+        element.appendChild(wordSpan);
+
+        if (wordIdx < words.length - 1) {
+            const space = document.createTextNode('\u00A0');
+            element.appendChild(space);
+            charIndex++;
+        }
+    });
+}
+
+// Animate section titles on scroll
+const titleObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.animated) {
+            entry.target.dataset.animated = 'true';
+            splitTextToChars(entry.target);
+            titleObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.section-title').forEach(title => {
+    titleObserver.observe(title);
+});
+
 // ===== Stats Counter Animation =====
 function animateCounters() {
     const counters = document.querySelectorAll('.stat-number');
@@ -59,10 +301,10 @@ function animateCounters() {
     });
 }
 
-// ===== Intersection Observer for Animations =====
+// ===== Intersection Observer for Scroll Animations =====
 const observerOptions = {
-    threshold: 0.2,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.15,
+    rootMargin: '0px 0px -30px 0px'
 };
 
 const fadeObserver = new IntersectionObserver((entries) => {
@@ -74,9 +316,25 @@ const fadeObserver = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-document.querySelectorAll('.about-card, .service-card, .article-card, .contact-card').forEach(el => {
+document.querySelectorAll('.about-card, .service-card, .article-card, .contact-card').forEach((el, index) => {
     el.classList.add('fade-in');
+    el.style.transitionDelay = (index % 4) * 0.1 + 's';
     fadeObserver.observe(el);
+});
+
+// Reveal observer for other elements
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.section-header, .cta-card, .contact-form-wrapper, .contact-info').forEach(el => {
+    el.classList.add('reveal');
+    revealObserver.observe(el);
 });
 
 // Stats observer
@@ -149,47 +407,4 @@ if (contactForm) {
             formSuccess.style.display = 'block';
         }
     });
-}
-
-// ===== Floating Particles (Hero) =====
-const particlesContainer = document.getElementById('particles');
-
-if (particlesContainer) {
-    function createParticle() {
-        const particle = document.createElement('div');
-        const size = Math.random() * 6 + 3;
-        const x = Math.random() * 100;
-        const duration = Math.random() * 15 + 10;
-        const delay = Math.random() * 5;
-
-        particle.style.cssText = `
-            position: absolute;
-            width: ${size}px;
-            height: ${size}px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
-            border-radius: 50%;
-            left: ${x}%;
-            bottom: -10px;
-            animation: floatUp ${duration}s linear ${delay}s infinite;
-            pointer-events: none;
-        `;
-
-        particlesContainer.appendChild(particle);
-    }
-
-    // Add floating animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-    `;
-    document.head.appendChild(style);
-
-    for (let i = 0; i < 20; i++) {
-        createParticle();
-    }
 }
