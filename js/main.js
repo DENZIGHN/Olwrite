@@ -402,6 +402,30 @@ const formSuccess = document.getElementById('formSuccess');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
+
+        const name = contactForm.querySelector('#name').value.trim();
+        const phone = contactForm.querySelector('#phone').value.trim();
+        const email = contactForm.querySelector('#email').value.trim();
+        const subject = contactForm.querySelector('#subject');
+        const subjectText = subject.options[subject.selectedIndex]
+            ? subject.options[subject.selectedIndex].text
+            : '';
+        const message = contactForm.querySelector('#message').value.trim();
+
+        const body = [
+            'Имя: ' + name,
+            phone ? 'Телефон: ' + phone : '',
+            email ? 'Email: ' + email : '',
+            subjectText ? 'Тема: ' + subjectText : '',
+            message ? '\nСообщение:\n' + message : ''
+        ].filter(Boolean).join('\n');
+
+        const mailtoLink = 'mailto:info@olwrite.ru'
+            + '?subject=' + encodeURIComponent('Заявка с сайта: ' + (subjectText || 'Общий вопрос'))
+            + '&body=' + encodeURIComponent(body);
+
+        window.location.href = mailtoLink;
+
         contactForm.style.display = 'none';
         if (formSuccess) {
             formSuccess.style.display = 'block';
