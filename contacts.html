@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Контакты | Olwrite.ru — Зубицкая Ольга Александровна</title>
     <meta name="description" content="Свяжитесь с репетитором по русскому языку Зубицкой Ольгой Александровной. Запишитесь на занятие или бесплатную консультацию.">
+    <meta property="og:title" content="Контакты — Olwrite.ru">
+    <meta property="og:description" content="Запишитесь на занятие по русскому языку или бесплатную консультацию.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://olwrite.ru/contacts.html">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -20,8 +25,10 @@
             </a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">Обо мне</a></li>
                 <li><a href="articles.html">Статьи</a></li>
                 <li><a href="test.html">Тест</a></li>
+                <li><a href="prices.html">Цены</a></li>
                 <li><a href="contacts.html" class="active">Контакты</a></li>
             </ul>
             <button class="burger" id="burger" aria-label="Открыть меню">
@@ -127,8 +134,26 @@
                             <label for="message">Сообщение</label>
                             <textarea id="message" name="message" rows="4" placeholder="Расскажите о ваших целях и пожеланиях..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-full">Отправить заявку</button>
+                        <div class="form-group form-consent">
+                            <label class="consent-label">
+                                <input type="checkbox" id="consent" required>
+                                <span class="consent-box"></span>
+                                <span>Я согласен(на) на обработку персональных данных в соответствии с <a href="privacy.html" target="_blank">политикой конфиденциальности</a></span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full" id="submitBtn">Отправить заявку</button>
+                        <div class="form-error" id="formError" style="display: none;">
+                            Не удалось отправить заявку. Попробуйте ещё раз или напишите напрямую:
+                            <a href="mailto:info@olwrite.ru">info@olwrite.ru</a>
+                        </div>
                     </form>
+                    <div class="messenger-links">
+                        <p>Или напишите в мессенджер — это быстрее:</p>
+                        <div class="messenger-buttons">
+                            <a href="https://wa.me/79001234567?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B7%D0%B0%D0%BD%D1%8F%D1%82%D0%B8%D0%B5" class="messenger-btn whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+                            <a href="https://t.me/+79001234567" class="messenger-btn telegram" target="_blank" rel="noopener">Telegram</a>
+                        </div>
+                    </div>
                     <div class="form-success" id="formSuccess" style="display: none;">
                         <div class="success-icon">
                             <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="2"/><path d="M20 32L28 40L44 24" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -156,8 +181,10 @@
                     <h4>Навигация</h4>
                     <ul>
                         <li><a href="index.html">Главная</a></li>
+                        <li><a href="about.html">Обо мне</a></li>
                         <li><a href="articles.html">Статьи</a></li>
                         <li><a href="test.html">Тест</a></li>
+                        <li><a href="prices.html">Цены</a></li>
                         <li><a href="contacts.html">Контакты</a></li>
                     </ul>
                 </div>
@@ -171,7 +198,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Olwrite.ru | Зубицкая Ольга Александровна. Все права защищены.</p>
+                <p>&copy; 2026 Olwrite.ru | Зубицкая Ольга Александровна. Все права защищены. &middot; <a href="privacy.html">Политика конфиденциальности</a></p>
             </div>
         </div>
     </footer>

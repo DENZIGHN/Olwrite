@@ -1926,3 +1926,835 @@ img {
         padding: 12px;
     }
 }
+
+/* ============================================================
+   Фаза 0–1 Roadmap: движок тестов, разбор ошибок, форма,
+   страницы «Обо мне», «Цены», FAQ, 404, правовые страницы
+   ============================================================ */
+
+/* ===== Тест: выбор режима разбора ===== */
+.quiz-mode {
+    text-align: left;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+}
+
+.quiz-mode-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+}
+
+.quiz-mode-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--text-secondary);
+}
+
+.quiz-mode-option small {
+    color: var(--text-light);
+}
+
+.quiz-mode-option input {
+    position: absolute;
+    opacity: 0;
+}
+
+.quiz-mode-radio {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    position: relative;
+    transition: border-color var(--transition);
+}
+
+.quiz-mode-option input:checked + .quiz-mode-radio {
+    border-color: var(--primary);
+}
+
+.quiz-mode-option input:checked + .quiz-mode-radio::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--primary);
+}
+
+.quiz-mode-option input:focus-visible + .quiz-mode-radio {
+    box-shadow: 0 0 0 3px var(--primary-bg);
+}
+
+/* ===== Тест: продолжить незаконченный ===== */
+.quiz-resume {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: var(--primary-bg);
+    border: 1px dashed var(--primary);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.quiz-resume p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* ===== Тест: мгновенный разбор ===== */
+.quiz-option.locked {
+    cursor: default;
+}
+
+.quiz-option.locked:hover {
+    border-color: var(--border);
+    background: var(--bg);
+}
+
+.quiz-option.is-correct,
+.quiz-option.locked.is-correct:hover {
+    border-color: var(--green);
+    background: var(--green-bg);
+}
+
+.quiz-option.is-correct .quiz-option-letter {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+}
+
+.quiz-option.is-wrong,
+.quiz-option.locked.is-wrong:hover {
+    border-color: var(--accent);
+    background: rgba(114, 47, 55, 0.06);
+}
+
+.quiz-option.is-wrong .quiz-option-letter {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.quiz-explanation {
+    margin-top: 20px;
+    padding: 18px 20px;
+    border-radius: var(--radius);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.quiz-explanation.animate {
+    animation: questionIn 0.35s ease-out;
+}
+
+.quiz-explanation.correct {
+    background: var(--green-bg);
+    border: 1px solid rgba(74, 124, 89, 0.3);
+}
+
+.quiz-explanation.wrong {
+    background: rgba(114, 47, 55, 0.06);
+    border: 1px solid rgba(114, 47, 55, 0.25);
+}
+
+.quiz-explanation-verdict {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.quiz-explanation.correct .quiz-explanation-verdict { color: var(--green); }
+.quiz-explanation.wrong .quiz-explanation-verdict { color: var(--accent); }
+
+.quiz-explanation p {
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* ===== Тест: разбор ответов на экране результатов ===== */
+.quiz-review {
+    margin-top: 48px;
+    text-align: left;
+}
+
+.quiz-review-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.review-item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    overflow: hidden;
+    background: var(--bg);
+}
+
+.review-item.wrong { border-left: 4px solid var(--accent); }
+.review-item.correct { border-left: 4px solid var(--green); }
+
+.review-item-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-body);
+    font-size: 14px;
+}
+
+.review-status {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.review-item.correct .review-status { background: var(--green); }
+.review-item.wrong .review-status { background: var(--accent); }
+
+.review-q-num {
+    flex-shrink: 0;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.review-q-text {
+    flex: 1;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.review-chevron {
+    flex-shrink: 0;
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid var(--text-light);
+    border-bottom: 2px solid var(--text-light);
+    transform: rotate(45deg);
+    transition: transform var(--transition);
+}
+
+.review-item.open .review-chevron {
+    transform: rotate(-135deg);
+}
+
+.review-item-body {
+    display: none;
+    padding: 0 16px 16px 52px;
+}
+
+.review-item.open .review-item-body {
+    display: block;
+}
+
+.review-answer {
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.review-answer.hidden { display: none; }
+
+.review-answer.wrong-answer {
+    background: rgba(114, 47, 55, 0.06);
+    color: var(--accent);
+}
+
+.review-answer.correct-answer {
+    background: var(--green-bg);
+    color: var(--green);
+}
+
+.review-explanation {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 8px 0 0;
+}
+
+/* ===== Форма: согласие на обработку ПД ===== */
+.form-consent .consent-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.form-consent a {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.form-consent input {
+    position: absolute;
+    opacity: 0;
+}
+
+.consent-box {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    position: relative;
+    transition: all var(--transition);
+}
+
+.form-consent input:checked + .consent-box {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.form-consent input:checked + .consent-box::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 9px;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(45deg);
+}
+
+.form-consent input:focus-visible + .consent-box {
+    box-shadow: 0 0 0 3px var(--primary-bg);
+}
+
+.form-error {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    background: rgba(114, 47, 55, 0.06);
+    border: 1px solid rgba(114, 47, 55, 0.25);
+    color: var(--accent);
+    font-size: 14px;
+}
+
+.form-error a {
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* ===== Мессенджеры ===== */
+.messenger-links {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+    text-align: center;
+}
+
+.messenger-links p {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 12px;
+}
+
+.messenger-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.messenger-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    transition: all var(--transition);
+}
+
+.messenger-btn::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.messenger-btn.whatsapp::before { background: #25d366; }
+.messenger-btn.telegram::before { background: #2aabee; }
+
+.messenger-btn:hover {
+    border-color: var(--primary);
+    background: var(--primary-bg);
+    color: var(--primary-dark);
+}
+
+/* ===== Страница «Обо мне» ===== */
+.profile-grid {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 56px;
+    align-items: start;
+}
+
+.profile-photo-col .photo-frame-border {
+    margin-bottom: 24px;
+}
+
+.profile-facts {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.profile-fact {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 14px 20px;
+    background: var(--bg-alt);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+}
+
+.profile-fact-number {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 64px;
+}
+
+.profile-fact-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.profile-resume h2 {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.resume-block {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.resume-block:first-of-type {
+    padding-top: 0;
+}
+
+.resume-block h3 {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 8px;
+}
+
+.resume-block p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+}
+
+.resume-list {
+    padding-left: 0;
+}
+
+.resume-list li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.resume-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+}
+
+.profile-cta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+}
+
+/* ===== Прайс-лист ===== */
+.prices-updated {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 36px;
+}
+
+.prices-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    align-items: stretch;
+}
+
+.price-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px 26px;
+    position: relative;
+    transition: all var(--transition);
+}
+
+.price-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-light);
+}
+
+.price-card.featured {
+    border: 2px solid var(--primary);
+    box-shadow: var(--shadow-gold);
+}
+
+.price-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--bg-dark);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 16px;
+    border-radius: 100px;
+    white-space: nowrap;
+}
+
+.price-card h3 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.price-amount {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: center;
+    line-height: 1;
+}
+
+.price-unit {
+    font-size: 13px;
+    color: var(--text-light);
+    text-align: center;
+    margin: 8px 0 20px;
+}
+
+.price-features {
+    flex: 1;
+    padding: 18px 0;
+    border-top: 1px solid var(--border-light);
+    margin-bottom: 20px;
+}
+
+.price-features li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.price-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-weight: 700;
+}
+
+.prices-disclaimer {
+    max-width: 720px;
+    margin: 36px auto 0;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* ===== FAQ ===== */
+.faq-section {
+    background: var(--bg-warm);
+}
+
+.faq-list {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    padding: 18px 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: left;
+    transition: color var(--transition);
+}
+
+.faq-question:hover {
+    color: var(--primary-dark);
+}
+
+.faq-chevron {
+    flex-shrink: 0;
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid var(--primary);
+    border-bottom: 2px solid var(--primary);
+    transform: rotate(45deg);
+    transition: transform var(--transition);
+}
+
+.faq-item.open .faq-chevron {
+    transform: rotate(-135deg);
+}
+
+.faq-answer {
+    display: none;
+    padding: 0 22px 18px;
+}
+
+.faq-item.open .faq-answer {
+    display: block;
+}
+
+.faq-answer p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* ===== Правовые страницы ===== */
+.legal-content {
+    max-width: 760px;
+}
+
+.legal-updated {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 32px;
+}
+
+.legal-content h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    margin: 32px 0 12px;
+}
+
+.legal-content p,
+.legal-content li {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 12px;
+}
+
+.legal-content ul {
+    padding-left: 24px;
+    list-style: disc;
+}
+
+.legal-content a {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+/* ===== 404 ===== */
+.not-found {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 140px 0 80px;
+}
+
+.not-found-code {
+    font-family: var(--font-display);
+    font-size: clamp(90px, 15vw, 160px);
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+}
+
+.not-found h1 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 4vw, 36px);
+    margin-bottom: 12px;
+}
+
+.not-found p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 480px;
+    margin: 0 auto 32px;
+}
+
+.not-found-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ===== Доступность: отключение анимаций ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== Адаптив новых компонентов ===== */
+@media (max-width: 1024px) {
+    .prices-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .profile-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .profile-photo-col {
+        max-width: 340px;
+        margin: 0 auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .prices-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .review-q-text {
+        display: none;
+    }
+
+    .review-item-body {
+        padding-left: 16px;
+    }
+
+    .quiz-mode {
+        padding: 16px;
+    }
+
+    .profile-cta .btn {
+        width: 100%;
+    }
+}
+
+/* ===== Плавающая кнопка быстрой связи ===== */
+.float-contact {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 900;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #25d366;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.float-contact:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.5);
+}
+
+@media (min-width: 1025px) {
+    .float-contact {
+        right: 32px;
+        bottom: 32px;
+    }
+}

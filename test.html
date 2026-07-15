@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тест по русскому языку | Olwrite.ru — Зубицкая Ольга Александровна</title>
     <meta name="description" content="Проверьте свои знания русского языка! 20 вопросов от простых до сложных. Узнайте свой уровень грамотности.">
+    <meta property="og:title" content="Тест по русскому языку — Olwrite.ru">
+    <meta property="og:description" content="20 вопросов от простых до сложных с разбором ошибок. Узнайте свой уровень грамотности!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://olwrite.ru/test.html">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -20,8 +25,10 @@
             </a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">Обо мне</a></li>
                 <li><a href="articles.html">Статьи</a></li>
                 <li><a href="test.html" class="active">Тест</a></li>
+                <li><a href="prices.html">Цены</a></li>
                 <li><a href="contacts.html">Контакты</a></li>
             </ul>
             <button class="burger" id="burger" aria-label="Открыть меню">
@@ -50,21 +57,38 @@
                     <div class="quiz-start-letters">
                         <span>А</span><span>Б</span><span>В</span><span>Г</span>
                     </div>
-                    <h2>Готовы проверить свои знания?</h2>
-                    <p>Тест состоит из 20 вопросов, разделённых на три уровня сложности: простые, средние и сложные. На каждый вопрос — один правильный ответ.</p>
+                    <h2 id="quizTitle">Готовы проверить свои знания?</h2>
+                    <p id="quizDescription">Тест состоит из 20 вопросов, разделённых на три уровня сложности. На каждый вопрос — один правильный ответ.</p>
                     <div class="quiz-start-info">
                         <div class="quiz-info-item">
-                            <span class="quiz-info-number">10</span>
+                            <span class="quiz-info-number" id="countEasy">10</span>
                             <span class="quiz-info-label">Простых</span>
                         </div>
                         <div class="quiz-info-item">
-                            <span class="quiz-info-number">5</span>
+                            <span class="quiz-info-number" id="countMedium">5</span>
                             <span class="quiz-info-label">Средних</span>
                         </div>
                         <div class="quiz-info-item">
-                            <span class="quiz-info-number">5</span>
+                            <span class="quiz-info-number" id="countHard">5</span>
                             <span class="quiz-info-label">Сложных</span>
                         </div>
+                    </div>
+                    <div class="quiz-mode">
+                        <p class="quiz-mode-label">Когда показывать разбор ошибок?</p>
+                        <label class="quiz-mode-option">
+                            <input type="radio" name="quizMode" id="modeFinal" checked>
+                            <span class="quiz-mode-radio"></span>
+                            <span>В конце теста <small>— можно возвращаться и менять ответы</small></span>
+                        </label>
+                        <label class="quiz-mode-option">
+                            <input type="radio" name="quizMode" id="modeInstant">
+                            <span class="quiz-mode-radio"></span>
+                            <span>После каждого вопроса <small>— ответ фиксируется сразу</small></span>
+                        </label>
+                    </div>
+                    <div class="quiz-resume" id="quizResume" style="display: none;">
+                        <p>У вас есть незаконченный тест.</p>
+                        <button class="btn btn-outline" id="resumeBtn">Продолжить с того же места</button>
                     </div>
                     <button class="btn btn-primary btn-lg" id="quizStartBtn">Начать тест</button>
                 </div>
@@ -78,7 +102,7 @@
                         <div class="quiz-progress-fill" id="progressFill"></div>
                     </div>
                     <div class="quiz-progress-info">
-                        <span>Вопрос <strong id="currentQ">1</strong> из <strong>20</strong></span>
+                        <span>Вопрос <strong id="currentQ">1</strong> из <strong id="totalQ">20</strong></span>
                         <span class="quiz-level-badge" id="levelBadge">Простой</span>
                     </div>
                 </div>
@@ -87,6 +111,7 @@
                 <div class="quiz-question-card" id="questionCard">
                     <h3 class="quiz-question-text" id="questionText"></h3>
                     <div class="quiz-options" id="quizOptions"></div>
+                    <div class="quiz-explanation" id="quizExplanation" style="display: none;"></div>
                 </div>
 
                 <!-- Navigation -->
@@ -116,7 +141,7 @@
                             </svg>
                             <div class="result-circle-text">
                                 <span class="result-score" id="resultScore">0</span>
-                                <span class="result-total">из 20</span>
+                                <span class="result-total" id="resultTotal">из 20</span>
                             </div>
                         </div>
                     </div>
@@ -128,6 +153,9 @@
                         <button class="btn btn-primary" id="retryBtn">Пройти ещё раз</button>
                         <a href="contacts.html" class="btn btn-outline">Записаться на занятие</a>
                     </div>
+
+                    <!-- Разбор ответов -->
+                    <div class="quiz-review" id="quizReview"></div>
                 </div>
             </div>
         </div>
@@ -148,8 +176,10 @@
                     <h4>Навигация</h4>
                     <ul>
                         <li><a href="index.html">Главная</a></li>
+                        <li><a href="about.html">Обо мне</a></li>
                         <li><a href="articles.html">Статьи</a></li>
                         <li><a href="test.html">Тест</a></li>
+                        <li><a href="prices.html">Цены</a></li>
                         <li><a href="contacts.html">Контакты</a></li>
                     </ul>
                 </div>
@@ -163,12 +193,12 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Olwrite.ru | Зубицкая Ольга Александровна. Все права защищены.</p>
+                <p>&copy; 2026 Olwrite.ru | Зубицкая Ольга Александровна. Все права защищены. &middot; <a href="privacy.html">Политика конфиденциальности</a></p>
             </div>
         </div>
     </footer>
 
     <script src="js/main.js"></script>
-    <script src="js/quiz.js"></script>
+    <script src="js/quiz-engine.js"></script>
 </body>
 </html>

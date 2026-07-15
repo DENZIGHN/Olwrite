@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цены и пакеты занятий | Olwrite.ru — Зубицкая Ольга Александровна</title>
+    <meta name="description" content="Стоимость занятий по русскому языку: разовые занятия и пакеты «Базовый», «Интенсив», «Максимум». Подготовка к ВПР, ОГЭ, ЕГЭ.">
+    <meta property="og:title" content="Цены и пакеты занятий — Olwrite.ru">
+    <meta property="og:description" content="Стоимость занятий по русскому языку: разовые занятия и пакеты услуг.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://olwrite.ru/prices.html">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-text">Olwrite</span>
+                <span class="logo-dot">.ru</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">Обо мне</a></li>
+                <li><a href="articles.html">Статьи</a></li>
+                <li><a href="test.html">Тест</a></li>
+                <li><a href="prices.html" class="active">Цены</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+            <button class="burger" id="burger" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <span class="section-tag">Прайс-лист</span>
+            <h1 class="page-title">Пакеты занятий и цены</h1>
+            <p class="page-description">Выберите формат под вашу цель: от разового занятия до полного сопровождения с авторскими материалами.</p>
+        </div>
+    </section>
+
+    <!-- Prices -->
+    <section class="section prices-section">
+        <div class="container">
+            <p class="prices-updated" id="pricesUpdated"></p>
+            <div class="prices-grid" id="pricesGrid"></div>
+            <p class="prices-disclaimer" id="pricesDisclaimer"></p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Вопросы и ответы</span>
+                <h2 class="section-title">Частые вопросы о занятиях</h2>
+            </div>
+            <div class="faq-list" id="faqList"></div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta section">
+        <div class="container">
+            <div class="cta-card">
+                <h2>Не уверены, какой пакет подходит?</h2>
+                <p>Запишитесь на бесплатную консультацию — обсудим цели, проведём мини-диагностику и подберём формат вместе.</p>
+                <a href="contacts.html?subject=consult" class="btn btn-primary btn-lg">Бесплатная консультация</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <span class="logo-text">Olwrite</span>
+                        <span class="logo-dot">.ru</span>
+                    </a>
+                    <p>Зубицкая Ольга Александровна<br>Педагог-репетитор по русскому языку</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="about.html">Обо мне</a></li>
+                        <li><a href="articles.html">Статьи</a></li>
+                        <li><a href="test.html">Тест</a></li>
+                        <li><a href="prices.html">Цены</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Материалы</h4>
+                    <ul>
+                        <li><a href="articles.html?category=vpr">Подготовка к ВПР</a></li>
+                        <li><a href="articles.html?category=methods">Методические разработки</a></li>
+                        <li><a href="articles.html?category=other">Разное</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Olwrite.ru | Зубицкая Ольга Александровна. Все права защищены. · <a href="privacy.html">Политика конфиденциальности</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data/prices.js"></script>
+    <script src="data/faq.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/prices.js"></script>
+</body>
+</html>

@@ -399,8 +399,37 @@ if (categoryParam) {
 const contactForm = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
+// ===== Плавающая кнопка быстрой связи (WhatsApp) =====
+(function () {
+    if (document.querySelector('.float-contact')) return;
+    const btn = document.createElement('a');
+    btn.className = 'float-contact';
+    btn.href = 'https://wa.me/79001234567?text=' +
+        encodeURIComponent('Здравствуйте! Хочу записаться на занятие по русскому языку.');
+    btn.target = '_blank';
+    btn.rel = 'noopener';
+    btn.setAttribute('aria-label', 'Написать в WhatsApp');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26">' +
+        '<path d="M12 2a10 10 0 0 0-8.65 15.02L2 22l5.13-1.33A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.04.79.81-2.96-.2-.31A8.2 8.2 0 1 1 12 20.2zm4.5-6.13c-.25-.12-1.46-.72-1.68-.8-.23-.09-.39-.13-.56.12-.16.25-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.99-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.16 1.74 2.65 4.2 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.56.1.47-.07 1.46-.6 1.66-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.47-.28z"/></svg>';
+    document.body.appendChild(btn);
+})();
+
+// Сервис приёма форм (Formspree): создайте форму на formspree.io для info@olwrite.ru
+// и вставьте её адрес вида 'https://formspree.io/f/XXXXXXXX'.
+// Пока адрес пуст, используется резервный вариант через почтовый клиент (mailto).
+const FORM_ENDPOINT = '';
+
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    // Предвыбор темы из URL: contacts.html?subject=vpr
+    const subjectParam = new URLSearchParams(window.location.search).get('subject');
+    if (subjectParam) {
+        const subjectSelect = contactForm.querySelector('#subject');
+        if (subjectSelect && subjectSelect.querySelector('option[value="' + subjectParam + '"]')) {
+            subjectSelect.value = subjectParam;
+        }
+    }
+
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const name = contactForm.querySelector('#name').value.trim();
@@ -412,6 +441,38 @@ if (contactForm) {
             : '';
         const message = contactForm.querySelector('#message').value.trim();
 
+        const formError = document.getElementById('formError');
+        const submitBtn = document.getElementById('submitBtn');
+        if (formError) formError.style.display = 'none';
+
+        if (FORM_ENDPOINT) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Отправляем...';
+            try {
+                const response = await fetch(FORM_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: name,
+                        phone: phone,
+                        email: email,
+                        subject: subjectText,
+                        message: message,
+                        _subject: 'Заявка с сайта: ' + (subjectText || 'Общий вопрос')
+                    })
+                });
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                contactForm.style.display = 'none';
+                if (formSuccess) formSuccess.style.display = 'block';
+            } catch (err) {
+                if (formError) formError.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Отправить заявку';
+            }
+            return;
+        }
+
+        // Резерв: открыть письмо в почтовой программе пользователя
         const body = [
             'Имя: ' + name,
             phone ? 'Телефон: ' + phone : '',
@@ -420,15 +481,11 @@ if (contactForm) {
             message ? '\nСообщение:\n' + message : ''
         ].filter(Boolean).join('\n');
 
-        const mailtoLink = 'mailto:info@olwrite.ru'
+        window.location.href = 'mailto:info@olwrite.ru'
             + '?subject=' + encodeURIComponent('Заявка с сайта: ' + (subjectText || 'Общий вопрос'))
             + '&body=' + encodeURIComponent(body);
 
-        window.location.href = mailtoLink;
-
         contactForm.style.display = 'none';
-        if (formSuccess) {
-            formSuccess.style.display = 'block';
-        }
+        if (formSuccess) formSuccess.style.display = 'block';
     });
 }
