@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Статьи | Olwrite.ru — Зубицкая Ольга Александровна</title>
-    <meta name="description" content="Полезные статьи и материалы по русскому языку: подготовка к ВПР, методические разработки, советы для учеников.">
-    <meta property="og:title" content="Статьи и материалы — Olwrite.ru">
-    <meta property="og:description" content="Полезные статьи и материалы по русскому языку: подготовка к ВПР, методические разработки.">
+    <title>Результаты учеников | Olwrite.ru — Зубицкая Ольга Александровна</title>
+    <meta name="description" content="Мини-кейсы с динамикой: как менялись результаты учеников по русскому языку. Было → Стало → Срок → Методы.">
+    <meta property="og:title" content="Результаты учеников — Olwrite.ru">
+    <meta property="og:description" content="Мини-кейсы с динамикой: как менялись результаты учеников по русскому языку.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://olwrite.ru/articles.html">
+    <meta property="og:url" content="https://olwrite.ru/cases.html">
     <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar" id="navbar">
+    <nav class="navbar scrolled" id="navbar">
         <div class="container nav-container">
             <a href="index.html" class="logo">
                 <span class="logo-text">Olwrite</span>
@@ -26,7 +26,7 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="about.html">Обо мне</a></li>
-                <li><a href="articles.html" class="active">Статьи</a></li>
+                <li><a href="articles.html">Статьи</a></li>
                 <li><a href="test.html">Тест</a></li>
                 <li><a href="prices.html">Цены</a></li>
                 <li><a href="contacts.html">Контакты</a></li>
@@ -42,27 +42,27 @@
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
-            <span class="section-tag">Блог</span>
-            <h1 class="page-title">Статьи и материалы</h1>
-            <p class="page-description">Полезные материалы для подготовки к экзаменам, методические разработки и статьи о русском языке.</p>
+            <span class="section-tag">Результаты</span>
+            <h1 class="page-title">Кейсы учеников</h1>
+            <p class="page-description">Реальная динамика без персональных данных: с чем приходят ученики и к чему приходят в результате работы.</p>
         </div>
     </section>
 
-    <!-- Articles Section -->
-    <section class="articles section">
+    <!-- Cases -->
+    <section class="section cases-section">
         <div class="container">
-            <!-- Category Filter (заполняется из data/articles.js) -->
-            <div class="filter-bar" id="filterBar"></div>
+            <div class="cases-grid" id="casesGrid"></div>
+            <p class="cases-note">Все кейсы обезличены и приведены с согласия учеников и их родителей. Результаты индивидуальны и зависят от исходного уровня, регулярности занятий и выполнения домашних заданий.</p>
+        </div>
+    </section>
 
-            <!-- Articles Grid (заполняется из data/articles.js) -->
-            <div class="articles-grid" id="articlesGrid"></div>
-
-            <!-- Empty State -->
-            <div class="articles-empty" id="articlesEmpty" style="display: none;">
-                <div class="empty-icon">
-                    <svg viewBox="0 0 64 64" fill="none"><path d="M32 8L56 20V44L32 56L8 44V20L32 8Z" stroke="currentColor" stroke-width="2" opacity="0.3"/><path d="M24 28H40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M28 36H36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                </div>
-                <p>В этой категории пока нет статей</p>
+    <!-- CTA Section -->
+    <section class="cta section">
+        <div class="container">
+            <div class="cta-card">
+                <h2>Хотите такой же результат?</h2>
+                <p>Начнём с бесплатной консультации: определим цель, оценим текущий уровень и составим план занятий.</p>
+                <a href="contacts.html?subject=consult" class="btn btn-primary btn-lg">Записаться на консультацию</a>
             </div>
         </div>
     </section>
@@ -83,6 +83,7 @@
                     <ul>
                         <li><a href="index.html">Главная</a></li>
                         <li><a href="about.html">Обо мне</a></li>
+                        <li><a href="cases.html">Кейсы</a></li>
                         <li><a href="articles.html">Статьи</a></li>
                         <li><a href="test.html">Тест</a></li>
                         <li><a href="prices.html">Цены</a></li>
@@ -105,8 +106,8 @@
         </div>
     </footer>
 
-    <script src="data/articles.js"></script>
+    <script src="data/cases.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/articles.js"></script>
+    <script src="js/cases.js"></script>
 </body>
 </html>

@@ -352,48 +352,8 @@ if (statsSection) {
     statsObserver.observe(statsSection);
 }
 
-// ===== Articles Category Filter =====
-const filterBtns = document.querySelectorAll('.filter-btn');
-const articleCards = document.querySelectorAll('.article-card');
-const articlesEmpty = document.getElementById('articlesEmpty');
-
-function filterArticles(category) {
-    let visibleCount = 0;
-
-    articleCards.forEach(card => {
-        const cardCategory = card.getAttribute('data-category');
-        if (category === 'all' || cardCategory === category) {
-            card.classList.remove('hidden');
-            visibleCount++;
-        } else {
-            card.classList.add('hidden');
-        }
-    });
-
-    if (articlesEmpty) {
-        articlesEmpty.style.display = visibleCount === 0 ? 'block' : 'none';
-    }
-}
-
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        filterArticles(btn.getAttribute('data-category'));
-    });
-});
-
-// Handle category from URL params
-const urlParams = new URLSearchParams(window.location.search);
-const categoryParam = urlParams.get('category');
-if (categoryParam) {
-    const targetBtn = document.querySelector(`.filter-btn[data-category="${categoryParam}"]`);
-    if (targetBtn) {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        targetBtn.classList.add('active');
-        filterArticles(categoryParam);
-    }
-}
+// Примечание: фильтрация статей и рендеринг карточек вынесены в js/articles.js
+// (data-driven). Здесь оставлен только общий код сайта.
 
 // ===== Contact Form =====
 const contactForm = document.getElementById('contactForm');
