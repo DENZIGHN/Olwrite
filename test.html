@@ -27,7 +27,7 @@
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="about.html">Обо мне</a></li>
                 <li><a href="articles.html">Статьи</a></li>
-                <li><a href="test.html" class="active">Тест</a></li>
+                <li><a href="tests.html" class="active">Тесты</a></li>
                 <li><a href="prices.html">Цены</a></li>
                 <li><a href="contacts.html">Контакты</a></li>
             </ul>
@@ -42,9 +42,14 @@
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
-            <span class="section-tag">АБВГ Тестирование</span>
-            <h1 class="page-title">Тест по русскому языку</h1>
-            <p class="page-description">20 вопросов от простых к сложным. Проверьте свои знания орфографии, грамматики и пунктуации.</p>
+            <nav class="breadcrumbs" id="quizBreadcrumb">
+                <a href="index.html">Главная</a><span>/</span>
+                <a href="tests.html">Тесты</a><span>/</span>
+                <span id="breadcrumbCurrent">АБВГ</span>
+            </nav>
+            <span class="section-tag" id="testSectionTag">АБВГ Тестирование</span>
+            <h1 class="page-title" id="testPageTitle">Тест по русскому языку</h1>
+            <p class="page-description">Пройдите тест из вопросов разного уровня сложности и получите разбор каждого ответа.</p>
         </div>
     </section>
 
@@ -151,6 +156,7 @@
 
                     <div class="result-actions">
                         <button class="btn btn-primary" id="retryBtn">Пройти ещё раз</button>
+                        <span id="resultCtaSlot"></span>
                         <a href="contacts.html" class="btn btn-outline">Записаться на занятие</a>
                     </div>
 
@@ -178,7 +184,7 @@
                         <li><a href="index.html">Главная</a></li>
                         <li><a href="about.html">Обо мне</a></li>
                         <li><a href="articles.html">Статьи</a></li>
-                        <li><a href="test.html">Тест</a></li>
+                        <li><a href="tests.html">Тесты</a></li>
                         <li><a href="prices.html">Цены</a></li>
                         <li><a href="contacts.html">Контакты</a></li>
                     </ul>

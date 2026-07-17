@@ -3337,3 +3337,247 @@ img {
         width: 100%;
     }
 }
+
+/* ============================================================
+   Фаза 3 Roadmap: каталог тестов + история результатов
+   ============================================================ */
+
+/* ===== Каталог тестов ===== */
+.tests-catalog-section {
+    background: var(--bg);
+}
+
+.tests-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.test-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    transition: all var(--transition);
+}
+
+.test-card:hover {
+    border-color: var(--primary-light);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+}
+
+.test-card-icon {
+    flex-shrink: 0;
+}
+
+.test-icon-letters {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+}
+
+.test-icon-letters span {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    border-radius: 6px;
+    border: 1.5px solid var(--primary);
+    color: var(--primary-dark);
+    background: var(--primary-bg);
+}
+
+.test-icon-grade {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.test-icon-grade small {
+    font-size: 9px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+}
+
+.test-card-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.test-card-tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+}
+
+.test-card-tag.tag-general {
+    background: var(--green-bg);
+    color: var(--green);
+}
+
+.test-card-tag.tag-vpr {
+    background: var(--primary-bg);
+    color: var(--primary-dark);
+}
+
+.test-card-body h3 {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+}
+
+.test-card-body p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 14px;
+}
+
+.test-card-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--text-light);
+}
+
+.test-card-arrow {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--text-light);
+    border-top: 2px solid var(--text-light);
+    transform: rotate(45deg);
+    transition: all var(--transition);
+}
+
+.test-card:hover .test-card-arrow {
+    border-color: var(--primary);
+    transform: rotate(45deg) translate(2px, -2px);
+}
+
+/* ===== История результатов ===== */
+.results-history-section {
+    background: var(--bg-warm);
+}
+
+.results-history {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all var(--transition);
+}
+
+.history-item:hover {
+    border-color: var(--primary-light);
+    box-shadow: var(--shadow);
+}
+
+.history-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.history-item-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.history-item-date {
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+.history-item-score {
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    padding: 6px 14px;
+    border-radius: 100px;
+}
+
+.history-item-score.good {
+    background: var(--green-bg);
+    color: var(--green);
+}
+
+.history-item-score.mid {
+    background: var(--primary-bg);
+    color: var(--primary-dark);
+}
+
+.history-item-score.low {
+    background: rgba(114, 47, 55, 0.08);
+    color: var(--accent);
+}
+
+.history-empty {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+/* ===== Адаптив каталога тестов ===== */
+@media (max-width: 900px) {
+    .tests-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .test-card {
+        flex-wrap: wrap;
+    }
+
+    .test-card-arrow {
+        display: none;
+    }
+
+    .history-item {
+        flex-wrap: wrap;
+    }
+}

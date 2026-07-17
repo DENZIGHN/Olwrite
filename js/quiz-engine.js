@@ -8,10 +8,10 @@
 
     // Реестр тестов (защита от подключения произвольных скриптов через URL)
     const KNOWN_QUIZZES = {
-        'abvg': 'data/quiz-abvg.js'
-        // 'vpr-5': 'data/quiz-vpr-5.js',  // Фаза 3 Roadmap
-        // 'vpr-6': 'data/quiz-vpr-6.js',
-        // 'vpr-7': 'data/quiz-vpr-7.js'
+        'abvg': 'data/quiz-abvg.js',
+        'vpr-5': 'data/quiz-vpr-5.js',
+        'vpr-6': 'data/quiz-vpr-6.js',
+        'vpr-7': 'data/quiz-vpr-7.js'
     };
 
     const letters = ['A', 'B', 'C', 'D'];
@@ -79,7 +79,13 @@
     function saveResultToHistory(score) {
         try {
             const history = JSON.parse(localStorage.getItem('olwrite_results') || '[]');
-            history.push({ quiz: quizId, score: score, total: quiz.questions.length, date: Date.now() });
+            history.push({
+                quiz: quizId,
+                title: quiz.title,
+                score: score,
+                total: quiz.questions.length,
+                date: Date.now()
+            });
             localStorage.setItem('olwrite_results', JSON.stringify(history.slice(-50)));
         } catch (e) { /* noop */ }
     }
@@ -94,6 +100,12 @@
         const descEl = el('quizDescription');
         if (titleEl) titleEl.textContent = quiz.title;
         if (descEl) descEl.textContent = quiz.description;
+
+        // Заполнить шапку страницы и хлебные крошки данными теста
+        if (el('testPageTitle')) el('testPageTitle').textContent = quiz.title;
+        if (el('testSectionTag')) el('testSectionTag').textContent = quiz.pageTag || quiz.title;
+        if (el('breadcrumbCurrent')) el('breadcrumbCurrent').textContent = quiz.title;
+        document.title = quiz.title + ' | Olwrite.ru — Зубицкая Ольга Александровна';
 
         const counts = { easy: 0, medium: 0, hard: 0 };
         quiz.questions.forEach(q => counts[q.level]++);
@@ -250,8 +262,19 @@
     });
 
     // ===== Результаты =====
+    // Для тестов «Готов ли ты к ВПР?» quiz.resultTiers переопределяет сообщения
+    // (интерпретация именно готовности к экзамену — Roadmap 3.2).
     function resultMessage(score, total) {
-        // Пороги заданы для теста из 20 вопросов; масштабируются пропорционально
+        if (Array.isArray(quiz.resultTiers) && quiz.resultTiers.length) {
+            const pct = score / total;
+            let picked = quiz.resultTiers[0];
+            quiz.resultTiers.forEach(tier => {
+                if (pct >= tier.min) picked = tier;
+            });
+            return picked;
+        }
+
+        // Пороги по умолчанию заданы для теста из 20 вопросов; масштабируются пропорционально
         const pct = score / total;
         if (score === total) return {
             title: 'Впечатляет! Но чтобы вырасти, нужно превзойти самого себя!',
@@ -308,6 +331,19 @@
         const msg = resultMessage(score, total);
         el('resultTitle').textContent = msg.title;
         el('resultSubtitle').textContent = msg.subtitle;
+
+        // Дополнительная CTA-кнопка теста (например, «Пакет подготовки к ВПР» → prices.html)
+        const ctaSlot = el('resultCtaSlot');
+        if (ctaSlot) {
+            ctaSlot.innerHTML = '';
+            if (quiz.resultCta && quiz.resultCta.href && quiz.resultCta.label) {
+                const ctaBtn = document.createElement('a');
+                ctaBtn.href = quiz.resultCta.href;
+                ctaBtn.className = 'btn btn-primary';
+                ctaBtn.textContent = quiz.resultCta.label;
+                ctaSlot.appendChild(ctaBtn);
+            }
+        }
 
         renderReview();
         window.scrollTo({ top: quizResults.offsetTop - 100, behavior: 'smooth' });

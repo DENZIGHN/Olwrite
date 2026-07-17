@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Результаты учеников | Olwrite.ru — Зубицкая Ольга Александровна</title>
-    <meta name="description" content="Мини-кейсы с динамикой: как менялись результаты учеников по русскому языку. Было → Стало → Срок → Методы.">
-    <meta property="og:title" content="Результаты учеников — Olwrite.ru">
-    <meta property="og:description" content="Мини-кейсы с динамикой: как менялись результаты учеников по русскому языку.">
+    <title>Тесты по русскому языку | Olwrite.ru — Зубицкая Ольга Александровна</title>
+    <meta name="description" content="Каталог тестов по русскому языку: общий тест «АБВГ» и тесты готовности к ВПР для 5, 6 и 7 классов. Проверьте свои знания и получите разбор ошибок.">
+    <meta property="og:title" content="Тесты по русскому языку — Olwrite.ru">
+    <meta property="og:description" content="Общий тест «АБВГ» и тесты готовности к ВПР для 5, 6 и 7 классов с разбором ошибок.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://olwrite.ru/cases.html">
+    <meta property="og:url" content="https://olwrite.ru/tests.html">
     <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +27,7 @@
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="about.html">Обо мне</a></li>
                 <li><a href="articles.html">Статьи</a></li>
-                <li><a href="tests.html">Тесты</a></li>
+                <li><a href="tests.html" class="active">Тесты</a></li>
                 <li><a href="prices.html">Цены</a></li>
                 <li><a href="contacts.html">Контакты</a></li>
             </ul>
@@ -42,17 +42,27 @@
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
-            <span class="section-tag">Результаты</span>
-            <h1 class="page-title">Кейсы учеников</h1>
-            <p class="page-description">Реальная динамика без персональных данных: с чем приходят ученики и к чему приходят в результате работы.</p>
+            <span class="section-tag">Проверка знаний</span>
+            <h1 class="page-title">Тесты по русскому языку</h1>
+            <p class="page-description">Общий тест на грамотность и тесты готовности к ВПР по классам. Каждый тест — с подробным разбором ошибок и объяснением правил.</p>
         </div>
     </section>
 
-    <!-- Cases -->
-    <section class="section cases-section">
+    <!-- Tests Catalog -->
+    <section class="section tests-catalog-section">
         <div class="container">
-            <div class="cases-grid" id="casesGrid"></div>
-            <p class="cases-note">Все кейсы обезличены и приведены с согласия учеников и их родителей. Результаты индивидуальны и зависят от исходного уровня, регулярности занятий и выполнения домашних заданий.</p>
+            <div class="tests-grid" id="testsGrid"></div>
+        </div>
+    </section>
+
+    <!-- Results History -->
+    <section class="section results-history-section" id="resultsHistorySection" style="display: none;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Ваш прогресс</span>
+                <h2 class="section-title">Ваши результаты</h2>
+            </div>
+            <div class="results-history" id="resultsHistory"></div>
         </div>
     </section>
 
@@ -60,9 +70,9 @@
     <section class="cta section">
         <div class="container">
             <div class="cta-card">
-                <h2>Хотите такой же результат?</h2>
-                <p>Начнём с бесплатной консультации: определим цель, оценим текущий уровень и составим план занятий.</p>
-                <a href="contacts.html?subject=consult" class="btn btn-primary btn-lg">Записаться на консультацию</a>
+                <h2>Нашли пробелы в знаниях?</h2>
+                <p>Результат теста — отличная точка старта. Запишитесь на бесплатную консультацию, и мы составим программу под конкретные темы.</p>
+                <a href="contacts.html?subject=consult" class="btn btn-primary btn-lg">Бесплатная консультация</a>
             </div>
         </div>
     </section>
@@ -83,7 +93,6 @@
                     <ul>
                         <li><a href="index.html">Главная</a></li>
                         <li><a href="about.html">Обо мне</a></li>
-                        <li><a href="cases.html">Кейсы</a></li>
                         <li><a href="articles.html">Статьи</a></li>
                         <li><a href="tests.html">Тесты</a></li>
                         <li><a href="prices.html">Цены</a></li>
@@ -106,8 +115,8 @@
         </div>
     </footer>
 
-    <script src="data/cases.js"></script>
+    <script src="data/tests-catalog.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/cases.js"></script>
+    <script src="js/tests-catalog.js"></script>
 </body>
 </html>
